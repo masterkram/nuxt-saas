@@ -1,0 +1,68 @@
+@import "tailwindcss";
+@import "@nuxt/ui";
+@plugin "@tailwindcss/typography";
+
+@theme static {
+  --font-*: initial;
+  --font-serif: 'IBM Plex Serif', serif;
+  --font-sans: 'Gabarito', sans-serif;
+  --font-mono: 'JetBrains Mono', monospace;
+
+  --color-gray-50: var(--ui-color-neutral-50);
+  --color-gray-100: var(--ui-color-neutral-100);
+  --color-gray-200: var(--ui-color-neutral-200);
+  --color-gray-300: var(--ui-color-neutral-300);
+  --color-gray-400: var(--ui-color-neutral-400);
+  --color-gray-500: var(--ui-color-neutral-500);
+  --color-gray-600: var(--ui-color-neutral-600);
+  --color-gray-700: var(--ui-color-neutral-700);
+  --color-gray-800: var(--ui-color-neutral-800);
+  --color-gray-900: var(--ui-color-neutral-900);
+  --color-gray-950: var(--ui-color-neutral-950);
+
+  --color-boston-blue-50: #effafc;
+  --color-boston-blue-100: #d6f0f7;
+  --color-boston-blue-200: #b1e2f0;
+  --color-boston-blue-300: #7ccce4;
+  --color-boston-blue-400: #3facd1;
+  --color-boston-blue-500: #2596be;
+  --color-boston-blue-600: #20749a;
+  --color-boston-blue-700: #215e7d;
+  --color-boston-blue-800: #234f67;
+  --color-boston-blue-900: #214358;
+  --color-boston-blue-950: #112a3b;
+
+  --color-primary-50: var(--ui-color-primary-50);
+  --color-primary-100: var(--ui-color-primary-100);
+  --color-primary-200: var(--ui-color-primary-200);
+  --color-primary-300: var(--ui-color-primary-300);
+  --color-primary-400: var(--ui-color-primary-400);
+  --color-primary-500: var(--ui-color-primary-500);
+  --color-primary-600: var(--ui-color-primary-600);
+  --color-primary-700: var(--ui-color-primary-700);
+  --color-primary-800: var(--ui-color-primary-800);
+  --color-primary-900: var(--ui-color-primary-900);
+  --color-primary-950: var(--ui-color-primary-950);
+}
+
+.animate {
+  @apply opacity-0 translate-y-3;
+  @apply transition-all duration-700 ease-out;
+}
+
+.animate.show {
+  @apply opacity-100 translate-y-0;
+}
+
+:root {
+  --ui-container: var(--container-3xl);
+  /* --ui-radius: 0.15rem; */
+}
+
+.blue-icon {
+  @apply text-blue-500;
+}
+
+.editor-content {
+  @apply bg-white dark:bg-gray-900;
+}
