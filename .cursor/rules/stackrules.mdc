@@ -1,0 +1,9 @@
+---
+alwaysApply: true
+---
+
+This project is a Nuxt.js application with a PostgreSQL database.
+The database is hosted on Supabase.
+We use drizzle-orm to interact with the database.
+TailwindCSS is used for styling.
+We use NuxtUI as our component library.
