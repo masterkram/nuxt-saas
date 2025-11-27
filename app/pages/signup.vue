@@ -106,7 +106,7 @@ async function onSubmit(event: FormSubmitEvent<Schema>) {
       <template #footer>
         <p>
           Already have an account?
-          <NuxtLink to="/login" class="font-medium text-primary hover:underline">
+          <NuxtLink to="/login" class="font-medium text-primary-500 hover:underline">
             Sign in
           </NuxtLink>
         </p>

@@ -53,7 +53,7 @@ const componentGroups = [
       >
         <div class="flex flex-col items-center justify-center gap-3">
           <div class="p-2 rounded-lg">
-            <UIcon :name="component.icon" class="size-5 text-primary" />
+            <UIcon :name="component.icon" class="size-5 text-primary-500" />
           </div>
           <div class="flex-1 text-center">
             <p class="font-medium text-sm mb-1">{{ component.label }}</p>

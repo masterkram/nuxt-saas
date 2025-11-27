@@ -44,7 +44,7 @@ function saveGrid() {
     <div class="space-y-3">
       <div class="flex items-center justify-between">
         <div class="flex items-center gap-2">
-          <UIcon name="i-lucide-grid-2x2" class="size-5 text-primary" />
+          <UIcon name="i-lucide-grid-2x2" class="size-5 text-primary-500" />
           <h4 class="font-semibold">Grid Layout</h4>
         </div>
         <UButton 
@@ -81,8 +81,8 @@ function saveGrid() {
         </div>
 
         <div class="flex gap-2">
-          <UButton label="Save" @click="saveGrid" size="sm" />
-          <UButton label="Delete Block" color="error" variant="outline" @click="deleteNode" size="sm" />
+          <UButton label="Save" size="sm" @click="saveGrid" />
+          <UButton label="Delete Block" color="error" variant="outline" size="sm" @click="deleteNode" />
         </div>
       </div>
 

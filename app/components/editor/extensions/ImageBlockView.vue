@@ -39,7 +39,7 @@ function handleFileUpload(event: Event) {
   <NodeViewWrapper class="image-block" :class="{ 'ring-2 ring-primary': selected }">
     <div v-if="!node.attrs.src || isEditing" class="space-y-3">
       <div class="flex items-center gap-2">
-        <UIcon name="i-lucide-image" class="size-5 text-primary" />
+        <UIcon name="i-lucide-image" class="size-5 text-primary-500" />
         <h4 class="font-semibold">Image Block</h4>
       </div>
       
@@ -51,9 +51,9 @@ function handleFileUpload(event: Event) {
         <input 
           type="file" 
           accept="image/*" 
+          class="block w-full text-sm text-muted file:mr-4 file:py-2 file:px-4 file:rounded-lg file:border-0 file:text-sm file:font-semibold file:bg-primary file:text-primary-500 hover:file:bg-primary/90"
           @change="handleFileUpload"
-          class="block w-full text-sm text-muted file:mr-4 file:py-2 file:px-4 file:rounded-lg file:border-0 file:text-sm file:font-semibold file:bg-primary file:text-primary-foreground hover:file:bg-primary/90"
-        />
+        >
       </UFormGroup>
 
       <UFormGroup label="Alt Text">
@@ -65,13 +65,13 @@ function handleFileUpload(event: Event) {
       </UFormGroup>
 
       <div class="flex gap-2">
-        <UButton label="Save" @click="saveImage" size="sm" />
-        <UButton label="Delete" color="error" variant="outline" @click="deleteNode" size="sm" />
+        <UButton label="Save" size="sm" @click="saveImage" />
+        <UButton label="Delete" color="error" variant="outline" size="sm" @click="deleteNode" />
       </div>
     </div>
 
     <div v-else class="space-y-2">
-      <img :src="node.attrs.src" :alt="node.attrs.alt" class="w-full rounded-lg" />
+      <img :src="node.attrs.src" :alt="node.attrs.alt" class="w-full rounded-lg" >
       <p v-if="node.attrs.caption" class="text-sm text-center text-muted">{{ node.attrs.caption }}</p>
       <div class="flex gap-2 justify-center">
         <UButton label="Edit" icon="i-lucide-pencil" size="xs" variant="ghost" @click="isEditing = true" />

@@ -27,7 +27,7 @@ export default defineEventHandler(async (event) => {
     const userRecord = await db
       .select()
       .from(users)
-      .where(eq(users.id, user.id))
+      .where(eq(users.id, user.sub))
       .limit(1)
 
     if (!userRecord || userRecord.length === 0) {

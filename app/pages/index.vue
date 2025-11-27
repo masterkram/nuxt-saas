@@ -1,210 +1,108 @@
 <script setup lang="ts">
-import { sub } from 'date-fns'
-import type { DropdownMenuItem } from '@nuxt/ui'
+/**
+ * Employee Home Page - Shows the feed of published pages
+ */
 
-const items = [[{
-  label: 'New Page',
-  icon: 'i-lucide-file-plus',
-  to: '/pages/create'
-}, {
-  label: 'New Group',
-  icon: 'i-lucide-user-plus',
-  to: '/groups/create'
-}]] satisfies DropdownMenuItem[][]
+definePageMeta({
+  layout: 'employee',
+  middleware: 'auth'
+})
 
-// TODO: Fetch real stats from API
-const stats = ref([
-  {
-    label: 'Total Pages',
-    value: '24',
-    icon: 'i-lucide-file-text',
-    change: '+12%',
-    changeType: 'positive'
-  },
-  {
-    label: 'Active Employees',
-    value: '1,234',
-    icon: 'i-lucide-users',
-    change: '+5%',
-    changeType: 'positive'
-  },
-  {
-    label: 'Engagement Rate',
-    value: '78%',
-    icon: 'i-lucide-trending-up',
-    change: '+3%',
-    changeType: 'positive'
-  },
-  {
-    label: 'Avg. View Time',
-    value: '3m 45s',
-    icon: 'i-lucide-clock',
-    change: '-2%',
-    changeType: 'negative'
+const user = useUser()
+const { company } = useCompany()
+
+// Fetch the feed
+const { data: feed, pending, error, refresh } = await useFetch('/api/employee/feed', {
+  query: {
+    limit: 20
   }
-])
+})
 
-// TODO: Fetch recent pages from API
-const recentPages = ref([
-  {
-    id: 1,
-    title: 'Company Values Update',
-    status: 'published',
-    views: 856,
-    engagement: 72,
-    publishedAt: new Date(2025, 10, 20)
-  },
-  {
-    id: 2,
-    title: 'Q4 Goals & Objectives',
-    status: 'published',
-    views: 642,
-    engagement: 65,
-    publishedAt: new Date(2025, 10, 18)
-  },
-  {
-    id: 3,
-    title: 'New Benefits Package',
-    status: 'draft',
-    views: 0,
-    engagement: 0,
-    publishedAt: null
-  }
-])
+const greeting = computed(() => {
+  const hour = new Date().getHours()
+  if (hour < 12) return 'Good morning'
+  if (hour < 17) return 'Good afternoon'
+  return 'Good evening'
+})
 
-const NuxtLink = resolveComponent('NuxtLink')
-const UBadge = resolveComponent('UBadge')
-
-const columns = [{
-  accessorKey: 'title',
-  header: 'Title',
-  cell: ({ row }) => {
-    return h(NuxtLink, {
-      href: `/pages/${row.getValue('id')}`,
-      class: 'hover:underline'
-    }, row.getValue('title'))
+const displayName = computed(() => {
+  if (user.value?.firstName) {
+    return user.value.firstName
   }
-}, {
-  accessorKey: 'status',
-  header: 'Status',
-  cell: ({ row }) => {
-    return h(UBadge, {
-      color: row.getValue('status') === 'published' ? 'success' : 'neutral',
-      variant: 'subtle'
-    }, row.getValue('status'))
-  }
-}, {
-  accessorKey: 'views',
-  header: 'Views',
-}, {
-  accessorKey: 'engagement',
-  header: 'Engagement'
-}, {
-  accessorKey: 'publishedAt',
-  header: 'Published'
-}]
+  return 'there'
+})
 </script>
 
 <template>
-  <UDashboardPanel id="home">
+  <UDashboardPanel id="employee-home">
     <template #header>
-      <UDashboardNavbar title="Dashboard" :ui="{ right: 'gap-3' }">
+      <UDashboardNavbar :ui="{ right: 'gap-3' }">
         <template #leading>
           <UDashboardSidebarCollapse />
         </template>
 
-        <template #right>
-          <UDropdownMenu :items="items">
-            <UButton icon="i-lucide-plus" size="md" class="rounded-full" />
-          </UDropdownMenu>
+        <template #title>
+          <div>
+            <h1 class="text-lg font-semibold">{{ greeting }}, {{ displayName }}!</h1>
+            <p class="text-sm text-muted">Here's what's new at {{ company?.name || 'your company' }}</p>
+          </div>
         </template>
       </UDashboardNavbar>
     </template>
 
     <template #body>
-      <!-- Stats Grid -->
-      <div class="grid gap-4 lg:grid-cols-4 mb-8">
-        <UCard v-for="stat in stats" :key="stat.label" class="ring-1 ring-default">
-          <div class="flex items-start justify-between">
-            <div>
-              <p class="text-sm text-muted">{{ stat.label }}</p>
-              <p class="text-3xl font-semibold mt-2">{{ stat.value }}</p>
-              <p class="text-sm mt-2" :class="stat.changeType === 'positive' ? 'text-success' : 'text-error'">
-                {{ stat.change }} from last month
-              </p>
+      <div class="max-w-3xl mx-auto">
+        <!-- Loading State -->
+        <div v-if="pending" class="space-y-4">
+          <UCard v-for="i in 3" :key="i">
+            <div class="space-y-3">
+              <div class="flex items-start justify-between">
+                <div class="flex-1">
+                  <USkeleton class="h-6 w-3/4 mb-2" />
+                  <USkeleton class="h-4 w-1/2" />
+                </div>
+                <USkeleton class="h-5 w-12" />
+              </div>
+              <USkeleton class="h-4 w-full" />
+              <USkeleton class="h-4 w-2/3" />
+              <div class="flex gap-4">
+                <USkeleton class="h-4 w-16" />
+                <USkeleton class="h-4 w-16" />
+                <USkeleton class="h-4 w-16" />
+              </div>
             </div>
-            <div class="p-3 rounded-lg" :class="stat.changeType === 'positive' ? 'bg-success/10' : 'bg-error/10'">
-              <UIcon :name="stat.icon" class="size-6" :class="stat.changeType === 'positive' ? 'text-success' : 'text-error'" />
-            </div>
-          </div>
+          </UCard>
+        </div>
+
+        <!-- Error State -->
+        <UCard v-else-if="error" class="text-center py-8">
+          <UIcon name="i-lucide-alert-circle" class="size-12 text-error mx-auto mb-4" />
+          <h3 class="font-semibold mb-2">Failed to load feed</h3>
+          <p class="text-muted mb-4">{{ error.message }}</p>
+          <UButton label="Try Again" @click="refresh()" />
         </UCard>
+
+        <!-- Empty State -->
+        <UCard v-else-if="!feed || feed.length === 0" class="text-center py-12">
+          <div class="p-4 rounded-full bg-muted/20 w-fit mx-auto mb-4">
+            <UIcon name="i-lucide-newspaper" class="size-12 text-muted" />
+          </div>
+          <h3 class="text-xl font-semibold mb-2">No pages yet</h3>
+          <p class="text-muted max-w-md mx-auto">
+            When your company publishes new content, it will appear here. Check back soon!
+          </p>
+        </UCard>
+
+        <!-- Feed -->
+        <div v-else class="space-y-4">
+          <ViewerPageCard 
+            v-for="page in feed" 
+            :key="page.id" 
+            :page="page" 
+          />
+        </div>
       </div>
-
-      <!-- Quick Actions -->
-      <div class="grid gap-4 lg:grid-cols-3 mb-8">
-        <UCard class="ring-1 ring-default">
-          <div class="flex items-center justify-between">
-            <div>
-              <h3 class="text-lg font-semibold mb-1">Create New Page</h3>
-              <p class="text-sm text-muted">Start building engaging content</p>
-            </div>
-            <UButton
-              icon="i-lucide-arrow-right"
-              color="primary"
-              to="/pages/create"
-            />
-          </div>
-        </UCard>
-
-        <UCard class="ring-1 ring-default">
-          <div class="flex items-center justify-between">
-            <div>
-              <h3 class="text-lg font-semibold mb-1">Manage Groups</h3>
-              <p class="text-sm text-muted">Organize your employees</p>
-            </div>
-            <UButton
-              icon="i-lucide-arrow-right"
-              color="primary"
-              variant="outline"
-              to="/groups"
-            />
-          </div>
-        </UCard>
-
-        <UCard class="ring-1 ring-default">
-          <div class="flex items-center justify-between">
-            <div>
-              <h3 class="text-lg font-semibold mb-1">View Analytics</h3>
-              <p class="text-sm text-muted">Track engagement metrics</p>
-            </div>
-            <UButton
-              icon="i-lucide-arrow-right"
-              color="primary"
-              variant="outline"
-              to="/analytics"
-            />
-          </div>
-        </UCard>
-      </div>
-
-      <!-- Recent Pages -->
-      <UCard class="ring-1 ring-default">
-        <template #header>
-          <div class="flex items-center justify-between">
-            <h3 class="text-lg font-semibold">Recent Pages</h3>
-            <UButton
-              label="View All"
-              color="neutral"
-              variant="ghost"
-              trailing-icon="i-lucide-arrow-right"
-              to="/pages"
-            />
-          </div>
-        </template>
-
-        <UTable :columns="columns" :data="recentPages" />
-
-      </UCard>
     </template>
   </UDashboardPanel>
 </template>
+

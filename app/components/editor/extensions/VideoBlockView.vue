@@ -43,7 +43,7 @@ function getEmbedUrl(url: string) {
   <NodeViewWrapper class="video-block" :class="{ 'ring-2 ring-primary': selected }">
     <div v-if="!node.attrs.src || isEditing" class="space-y-3">
       <div class="flex items-center gap-2">
-        <UIcon name="i-lucide-video" class="size-5 text-primary" />
+        <UIcon name="i-lucide-video" class="size-5 text-primary-500" />
         <h4 class="font-semibold">Video Block</h4>
       </div>
       
@@ -56,8 +56,8 @@ function getEmbedUrl(url: string) {
       </UFormGroup>
 
       <div class="flex gap-2">
-        <UButton label="Save" @click="saveVideo" size="sm" />
-        <UButton label="Delete" color="error" variant="outline" @click="deleteNode" size="sm" />
+        <UButton label="Save" size="sm" @click="saveVideo" />
+        <UButton label="Delete" color="error" variant="outline" size="sm" @click="deleteNode" />
       </div>
     </div>
 

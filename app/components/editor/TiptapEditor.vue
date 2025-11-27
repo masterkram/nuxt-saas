@@ -41,7 +41,7 @@ const editor = useEditor({
     Link.configure({
       openOnClick: false,
       HTMLAttributes: {
-        class: 'text-primary underline'
+        class: 'text-primary-500 underline'
       }
     }),
     Placeholder.configure({

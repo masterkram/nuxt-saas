@@ -44,7 +44,7 @@ const previewEditor = useEditor({
     Link.configure({
       openOnClick: true,
       HTMLAttributes: {
-        class: 'text-primary underline'
+        class: 'text-primary-500 underline'
       }
     }),
     Image,

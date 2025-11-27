@@ -39,7 +39,7 @@ function saveButton() {
     <div class="space-y-3">
       <div class="flex items-center justify-between">
         <div class="flex items-center gap-2">
-          <UIcon name="i-lucide-square" class="size-5 text-primary" />
+          <UIcon name="i-lucide-square" class="size-5 text-primary-500" />
           <h4 class="font-semibold">Button</h4>
         </div>
         <UButton 
@@ -78,8 +78,8 @@ function saveButton() {
         </div>
 
         <div class="flex gap-2">
-          <UButton label="Save" @click="saveButton" size="sm" />
-          <UButton label="Delete" color="error" variant="outline" @click="deleteNode" size="sm" />
+          <UButton label="Save" size="sm" @click="saveButton" />
+          <UButton label="Delete" color="error" variant="outline" size="sm" @click="deleteNode" />
         </div>
       </div>
 

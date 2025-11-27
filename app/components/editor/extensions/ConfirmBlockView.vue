@@ -28,7 +28,7 @@ function saveConfirm() {
     <div class="space-y-3">
       <div class="flex items-center justify-between">
         <div class="flex items-center gap-2">
-          <UIcon name="i-lucide-check-circle" class="size-5 text-primary" />
+          <UIcon name="i-lucide-check-circle" class="size-5 text-primary-500" />
           <h4 class="font-semibold">{{ node.attrs.title }}</h4>
           <UBadge v-if="node.attrs.required" color="error" variant="subtle" size="xs">Required</UBadge>
         </div>
@@ -52,8 +52,8 @@ function saveConfirm() {
         <UCheckbox v-model="required" label="Required" />
 
         <div class="flex gap-2">
-          <UButton label="Save" @click="saveConfirm" size="sm" />
-          <UButton label="Delete Block" color="error" variant="outline" @click="deleteNode" size="sm" />
+          <UButton label="Save" size="sm" @click="saveConfirm" />
+          <UButton label="Delete Block" color="error" variant="outline" size="sm" @click="deleteNode" />
         </div>
       </div>
 

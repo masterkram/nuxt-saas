@@ -2,7 +2,7 @@
 import { z } from 'zod'
 import type { FormSubmitEvent, AuthFormField } from '@nuxt/ui'
 
-const supabase = useSupabaseClient();
+const supabase = useSupabaseClient()
 
 definePageMeta({
   layout: 'auth'
@@ -10,6 +10,7 @@ definePageMeta({
 
 const router = useRouter()
 const toast = useToast()
+const isLoading = ref(false)
 
 const fields: AuthFormField[] = [{
   name: 'email',
@@ -38,28 +39,39 @@ const schema = z.object({
 type Schema = z.output<typeof schema>
 
 async function onSubmit(event: FormSubmitEvent<Schema>) {
-  // TODO: Implement actual authentication
+  isLoading.value = true
+  
   try {
-    console.log('Login attempt:', event.data)
-
-    await supabase.auth.signInWithPassword({
+    const { data, error } = await supabase.auth.signInWithPassword({
       email: event.data.email,
       password: event.data.password
     })
+
+    if (error) throw error
+
+    // Get user role from our database
+    const userProfile = await $fetch(`/api/users/${data.user?.id}`)
+    
     toast.add({
       title: 'Success',
       description: 'Logged in successfully',
       color: 'success'
     })
     
-    // Redirect to dashboard
-    router.push('/')
-  } catch (error) {
+    // Redirect based on role
+    if (userProfile?.role === 'admin' || userProfile?.role === 'super_admin' || userProfile?.role === 'editor') {
+      router.push('/admin')
+    } else {
+      router.push('/')
+    }
+  } catch (error: any) {
     toast.add({
       title: 'Error',
-      description: 'Invalid credentials',
+      description: error?.message || 'Invalid credentials',
       color: 'error'
     })
+  } finally {
+    isLoading.value = false
   }
 }
 </script>
@@ -78,7 +90,7 @@ async function onSubmit(event: FormSubmitEvent<Schema>) {
       <template #footer>
         <p>
           Don't have an account?
-          <NuxtLink to="/signup" class="font-medium text-primary hover:underline">
+          <NuxtLink to="/signup" class="font-medium text-primary-500 hover:underline">
             Sign up
           </NuxtLink>
         </p>

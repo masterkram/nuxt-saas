@@ -563,17 +563,17 @@ We will build the product without pricing for now, we will make contracts outsid
 - [x] Component property panel
 
 ### Month 3: Publishing & Social
-- [ ] Groups and Contacts management
-- [ ] Publish mode with targeting
+- [x] Groups and Contacts management
+- [x] Publish mode with targeting
 - [ ] Email notification system
-- [ ] Social features (reactions, comments)
-- [ ] Basic validation components (Quiz, Confirm)
+- [x] Social features (reactions, comments)
+- [x] Basic validation components (Quiz, Confirm)
 
 ### Month 4: Analytics & Employee App
 - [ ] Analytics mode with basic metrics
-- [ ] Employee web app (responsive)
+- [x] Employee web app (responsive)
 - [ ] Landing page customization
-- [ ] Feed component
+- [x] Feed component
 - [ ] Polish and bug fixes
 - [ ] Beta testing
 
