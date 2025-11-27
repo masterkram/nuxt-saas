@@ -17,6 +17,13 @@ export function useDrizzle() {
   return drizzle(process.env.DATABASE_URL, { schema: fullSchema });
 }
 
+// Export a singleton db instance
+if (!process.env.DATABASE_URL) {
+  throw Error('No DATABASE_URL found. Please add it from supabase.');
+}
+
+export const db = drizzle(process.env.DATABASE_URL, { schema: fullSchema });
+
 export const tables = schema;
 // Example: export types
 // export type User = typeof schema.users.$inferInsert;

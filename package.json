@@ -15,6 +15,15 @@
     "@nuxt/ui": "4.2.1",
     "@nuxtjs/supabase": "2.0.1",
     "@tailwindcss/typography": "^0.5.19",
+    "@tiptap/extension-color": "^3.11.0",
+    "@tiptap/extension-image": "^3.11.0",
+    "@tiptap/extension-link": "^3.11.0",
+    "@tiptap/extension-placeholder": "^3.11.0",
+    "@tiptap/extension-text-align": "^3.11.0",
+    "@tiptap/extension-text-style": "^3.11.0",
+    "@tiptap/extension-underline": "^3.11.0",
+    "@tiptap/starter-kit": "^3.11.0",
+    "@tiptap/vue-3": "^3.11.0",
     "dotenv": "^17.2.3",
     "drizzle-orm": "^0.44.7",
     "eslint": "^9.0.0",
@@ -22,9 +31,9 @@
     "pg": "^8.16.3",
     "typescript": "^5.6.3",
     "vue": "^3.5.24",
-    "vue-router": "^4.6.3"
+    "vue-router": "^4.6.3",
+    "zod": "^3.25.76"
   },
-  "packageManager": "pnpm@9.15.0+sha512.76e2379760a4328ec4415815bcd6628dee727af3779aaa4c914e3944156c4299921a89f976381ee107d41f12cfa4b66681ca9c718f0668fa0831ed4c6d8ba56c",
   "devDependencies": {
     "@types/pg": "^8.15.6",
     "drizzle-kit": "^0.31.7",
